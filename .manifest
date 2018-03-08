@@ -3,6 +3,8 @@
 	"minify": true,
 	"templater": "jinja2",
 	"properties": {
-		"title": "p2p"
+		"title": "uberpult",
+		"version": "1.0.0",
+		"description": "uberpult"
 	}
 }
