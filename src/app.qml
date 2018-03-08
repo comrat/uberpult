@@ -1,5 +1,6 @@
 Item {
 	property bool started;
+	property string ip;
 	anchors.fill: context;
 
 	Text {
@@ -7,6 +8,14 @@ Item {
 		y: 10;
 		text: parent.started ? "Server started" : "Server is not started";
 		color: parent.started ? "#0f0" : "#f00";
+		font.pixelSize: 24;
+	}
+
+	Text {
+		x: 10;
+		y: 50;
+		text: parent.ip;
+		color: "#000";
 		font.pixelSize: 24;
 	}
 
@@ -31,10 +40,13 @@ Item {
 					}
 				}
 			)
+
+			window.networkinterface.getIPAddress(function (ip) {
+				log("Got IP", ip);
+				parent.ip = ip
+			});
 		}
 	}
-
-	onStartedChanged: { log("started", value) }
 
 	onCompleted: { startDelayTimer.restart() }
 }
