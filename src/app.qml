@@ -1,29 +1,40 @@
 Item {
+	property bool started;
 	anchors.fill: context;
 
-	Rectangle {
-		width: 100;
-		height: 70;
-		anchors.centerIn: parent;
-		color: "green";
+	Text {
+		x: 10;
+		y: 10;
+		text: parent.started ? "Server started" : "Server is not started";
+		color: parent.started ? "#0f0" : "#f00";
+		font.pixelSize: 24;
+	}
 
-		ClickMixin { }
+	Timer {
+		id: startDelayTimer;
+		interval: 3000;
 
-		onClicked: {
+		onTriggered: {
 			var nodejs = window.nodejs
+			var parent = this.parent
 			nodejs.channel.setListener(function(msg) { log('[cordova] received:' + msg); });
 			nodejs.start('main.js',
 				function(err) {
 					var nodejs = window.nodejs
-					log("startupCallback", err)
 					if (err) {
-						log(err);
+						log("startupCallback error:", err)
+						parent.started = false
 					} else {
-						log ('Node.js Mobile Engine Started');
+						log('Node.js Mobile Engine Started');
+						parent.started = true
 						nodejs.channel.send('Hello from Cordova!');
 					}
 				}
 			)
 		}
 	}
+
+	onStartedChanged: { log("started", value) }
+
+	onCompleted: { startDelayTimer.restart() }
 }
