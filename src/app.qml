@@ -1,5 +1,9 @@
 Item {
+	id: main;
 	property bool started;
+	property int alpha;
+	property int beta;
+	property int gamma;
 	property string ip;
 	anchors.fill: context;
 
@@ -19,6 +23,27 @@ Item {
 		font.pixelSize: 24;
 	}
 
+	Text {
+		x: 10;
+		y: 100;
+		width: 100;
+		text: "alpha: " + main.alpha + "<br>beta: " + main.beta + "<br>gamma: " + main.gamma;
+		color: "#000";
+	}
+
+	OrientationMixin {
+		id: orientMixin;
+
+		onBetaChanged,
+		onAlphaChanged,
+		onGammaChanged,
+		onAbsoluteChanged: {
+			main.alpha = Math.round(this.alpha)
+			main.beta = Math.round(this.beta)
+			main.gamma = Math.round(this.gamma)
+		}
+	}
+
 	Timer {
 		id: startDelayTimer;
 		interval: 3000;
@@ -36,7 +61,6 @@ Item {
 					} else {
 						log('Node.js Mobile Engine Started');
 						parent.started = true
-						nodejs.channel.send('Hello from Cordova!');
 					}
 				}
 			)
@@ -46,6 +70,22 @@ Item {
 				parent.ip = ip
 			});
 		}
+	}
+
+	Timer {
+		id: pollingDelayTimer;
+		interval: 100;
+
+		onTriggered: {
+			var parent = this.parent
+			window.nodejs.channel.send({ alpha: parent.alpha, beta: parent.beta, gamma: parent.gamma });
+		}
+	}
+
+	onBetaChanged,
+	onAlphaChanged,
+	onGammaChanged: {
+		pollingDelayTimer.restart()
 	}
 
 	onCompleted: { startDelayTimer.restart() }

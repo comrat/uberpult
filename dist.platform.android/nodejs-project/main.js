@@ -15,7 +15,7 @@ app.listen(3000, function() {
 
 const cordova = require('cordova-bridge');
 
-cordova.channel.on('message', function (msg) {
-  console.log('[node] received:', msg);
-  cordova.channel.send('Replying to this message: ' + msg);
+cordova.channel.on('message', function (newState) {
+  console.log('[node] received:', newState);
+  state = newState;
 });
