@@ -1,0 +1,8 @@
+{
+	"platforms": ["web", "android"],
+	"minify": true,
+	"templater": "jinja2",
+	"properties": {
+		"title": "p2p"
+	}
+}
