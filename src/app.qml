@@ -49,32 +49,49 @@ Item {
 		interval: 3000;
 
 		onTriggered: {
-			var nodejs = window.nodejs
+			var context = this._context
 			var parent = this.parent
-			nodejs.channel.setListener(function(msg) { log('[cordova] received:' + msg); });
-			nodejs.start('main.js',
-				function(err) {
-					var nodejs = window.nodejs
-					if (err) {
-						log("startupCallback error:", err)
-						parent.started = false
-					} else {
-						log('Node.js Mobile Engine Started');
-						parent.started = true
-					}
-				}
-			)
 
 			window.networkinterface.getIPAddress(function (ip) {
 				log("Got IP", ip);
 				parent.ip = ip
+				context._processActions()
 			});
+
+			log("Wind", window)
+			var wsserver = window.cordova.plugins.wsserver;
+
+			var port = 41574
+			wsserver.start(port, {
+				'onFailure' :  function(addr, port, reason) {
+					log('Stopped listening on %s:%d. Reason: %s', addr, port, reason);
+					parent.started = false
+				},
+				'onOpen' : function(conn) {
+					log('A user connected from %s', conn.remoteAddr, "conn", conn);
+				},
+				'onMessage' : function(conn, msg) {
+					log(conn, msg);
+				},
+				'onClose' : function(conn, code, reason, wasClean) {
+					log('A user disconnected from %s', conn.remoteAddr);
+				}
+			}, function onStart(addr, port) {
+				log('Listening on address', addr, "port", port);
+				parent.started = true
+				context._processActions()
+			}, function onDidNotStart(reason) {
+				log('Did not start. Reason: %s', reason);
+				parent.started = false
+			});
+
+			// wsserver.send({'uuid':conn.uuid}, "LOL");
 		}
 	}
 
 	Timer {
 		id: pollingDelayTimer;
-		interval: 100;
+		interval: 1000;
 
 		onTriggered: {
 			var parent = this.parent
@@ -85,7 +102,7 @@ Item {
 	onBetaChanged,
 	onAlphaChanged,
 	onGammaChanged: {
-		pollingDelayTimer.restart()
+		// pollingDelayTimer.restart()
 	}
 
 	onCompleted: { startDelayTimer.restart() }
