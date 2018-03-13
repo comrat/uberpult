@@ -11,11 +11,17 @@ Object {
 			var context = this._context
 			var parent = this.parent
 
-			window.networkinterface.getIPAddress(function (ip) {
-				log("Got IP", ip);
-				parent.ip = ip
-				context._processActions()
-			});
+			if (window.networkinterface)
+				window.networkinterface.getIPAddress(function (ip) {
+					log("Got IP", ip);
+					parent.ip = ip
+					context._processActions()
+				});
+
+			if (!window.cordova || !window.cordova.plugins) {
+				log("WSS Plugin wasn't initialized")
+				return
+			}
 
 			var wsserver = window.cordova.plugins.wsserver;
 			var self = this
