@@ -2,6 +2,7 @@ Object {
 	id: serverProto;
 	property bool started;
 	property string ip;
+	property string port: 42451;
 
 	Timer {
 		id: startDelayTimer;
@@ -24,8 +25,7 @@ Object {
 			}
 
 			var wsserver = window.cordova.plugins.wsserver;
-			var self = this
-			var port = 41574
+			var port = parent.port
 			wsserver.start(port, {
 				'onFailure' :  function(addr, port, reason) {
 					log('Stopped listening on %s:%d. Reason: %s', addr, port, reason);
@@ -34,7 +34,7 @@ Object {
 				},
 				'onOpen': function(user) {
 					log('A user connected:', user);
-					self._user = user
+					parent._user = user
 					context._processActions()
 				},
 				'onMessage' : function(conn, msg) {
@@ -51,8 +51,7 @@ Object {
 				log('Did not start. Reason: %s', reason);
 				parent.started = false
 			});
-			this._wsserver = wsserver
-			// wsserver.send({'uuid':conn.uuid}, "LOL");
+			parent._wsserver = wsserver
 		}
 	}
 
