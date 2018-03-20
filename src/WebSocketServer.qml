@@ -2,7 +2,7 @@ Object {
 	id: serverProto;
 	property bool started;
 	property string ip;
-	property string port: 42451;
+	property string port;
 
 	Timer {
 		id: startDelayTimer;

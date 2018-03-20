@@ -5,7 +5,10 @@ Item {
 	property int gamma;
 	anchors.fill: context;
 
-	WebSocketServer { id: server; }
+	WebSocketServer {
+		id: server;
+		port: 42451;
+	}
 
 	Text {
 		y: 10;
@@ -25,9 +28,18 @@ Item {
 		font.pixelSize: 24;
 	}
 
+	Text {
+		y: 90;
+		width: 100%;
+		horizontalAlignment: Text.AlignHCenter;
+		text: server.port;
+		color: "#000";
+		font.pixelSize: 24;
+	}
+
 	GridView {
 		id: digitGrid;
-		y: 100;
+		y: 130;
 		width: (cellWidth + spacing) * 3;
 		height: (cellHeight + spacing) * 4;
 		cellWidth: 50;
@@ -58,7 +70,6 @@ Item {
 			this.model.append(data)
 		}
 	}
-
 
 	Item {
 		property int size: 50;
