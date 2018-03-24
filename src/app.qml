@@ -15,11 +15,10 @@ Item {
 		interval: 100;
 
 		onTriggered: {
-			var eventString = '{ event: "accelerometer",'
-			eventString += "alpha:" + orientation.alpha + ","
-			eventString += "beta:" + orientation.beta + ","
-			eventString += "gamma:" + orientation.gamma + ","
-			eventString += "absolute:" + orientation.absolute + "}"
+			var eventString = '{"event": "accelerometer",'
+			eventString += '"alpha":' + orientation.alpha + ','
+			eventString += '"beta":' + orientation.beta + ','
+			eventString += '"gamma":' + orientation.gamma + '}'
 			server.send(eventString)
 		}
 	}
