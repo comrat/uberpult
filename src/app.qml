@@ -1,13 +1,27 @@
 Item {
 	id: main;
-	property int alpha;
-	property int beta;
-	property int gamma;
 	anchors.fill: context;
 
 	WebSocketServer {
 		id: server;
 		port: 42451;
+	}
+
+	OrientationMixin { id: orientation; }
+
+	Timer {
+		repeat: running;
+		running: accelCheckbox.checked;
+		interval: 100;
+
+		onTriggered: {
+			var eventString = '{ event: "accelerometer",'
+			eventString += "alpha:" + orientation.alpha + ","
+			eventString += "beta:" + orientation.beta + ","
+			eventString += "gamma:" + orientation.gamma + ","
+			eventString += "absolute:" + orientation.absolute + "}"
+			server.send(eventString)
+		}
 	}
 
 	Text {
@@ -126,5 +140,20 @@ Item {
 			log("dpad key pressed", key)
 			server.send('{ event: "keyPressed", keyCode: "' + key + '" }')
 		}
+	}
+
+	Checkbox {
+		id: accelCheckbox;
+		y: 560;
+		anchors.horizontalCenter: parent.horizontalCenter;
+	}
+
+	Text {
+		y: 610;
+		width: 100%;
+		horizontalAlignment: Text.AlignHCenter;
+		font.pixelSize: 18;
+		color: "#000";
+		text: "Accelerometer";
 	}
 }
