@@ -50,37 +50,13 @@ Item {
 		font.pixelSize: 24;
 	}
 
-	GridView {
+	DigitGrid {
 		id: digitGrid;
 		y: 130;
-		width: (cellWidth + spacing) * 3;
-		height: (cellHeight + spacing) * 4;
-		cellWidth: 50;
-		cellHeight: 50;
-		anchors.horizontalCenter: parent.horizontalCenter;
-		positionMode: GridView.Center;
-		spacing: 5;
-		model: ListModel { }
-		delegate: KeyButton {
-			width: parent.cellWidth;
-			height: parent.cellHeight;
-			key: model.key;
 
-			onClicked: {
-				var key = model.key
-				log(key, "clicked")
-				server.send('{ event: "keyPressed", keyCode: "' + key + '" }')
-			}
-		}
-
-		onCompleted: {
-			var data = [
-				{ key: "1" }, { key: "2" }, { key: "3" },
-				{ key: "4" }, { key: "5" }, { key: "6" },
-				{ key: "7" }, { key: "8" }, { key: "9" },
-				{ key: "0" }
-			]
-			this.model.append(data)
+		onSendKey(key): {
+			log("Digit key pressed", key)
+			server.send('{ event: "keyPressed", keyCode: "' + key + '" }')
 		}
 	}
 
