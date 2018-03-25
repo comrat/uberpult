@@ -7,18 +7,14 @@ Item {
 		port: 42451;
 	}
 
-	OrientationMixin { id: orientation; }
+	Accelerometer {
+		enabled: accelCheckbox.checked;
 
-	Timer {
-		repeat: running;
-		running: accelCheckbox.checked;
-		interval: 100;
-
-		onTriggered: {
+		onSendPosition(alpha, beta, gamma): {
 			var eventString = '{"event": "accelerometer",'
-			eventString += '"alpha":' + orientation.alpha + ','
-			eventString += '"beta":' + orientation.beta + ','
-			eventString += '"gamma":' + orientation.gamma + '}'
+			eventString += '"alpha":' + alpha + ','
+			eventString += '"beta":' + beta + ','
+			eventString += '"gamma":' + gamma + '}'
 			server.send(eventString)
 		}
 	}
