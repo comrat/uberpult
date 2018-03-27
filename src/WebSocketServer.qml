@@ -13,11 +13,10 @@ Object {
 			var parent = this.parent
 
 			if (window.networkinterface)
-				window.networkinterface.getIPAddress(function (ip) {
+				window.networkinterface.getIPAddress(context.wrapNativeCallback(function (ip) {
 					log("Got IP", ip);
 					parent.ip = ip
-					context._processActions()
-				});
+				}));
 
 			if (!window.cordova || !window.cordova.plugins) {
 				log("WSS Plugin wasn't initialized")
@@ -27,30 +26,27 @@ Object {
 			var wsserver = window.cordova.plugins.wsserver;
 			var port = parent.port
 			wsserver.start(port, {
-				'onFailure' :  function(addr, port, reason) {
+				'onFailure' : context.wrapNativeCallback(function(addr, port, reason) {
 					log('Stopped listening on %s:%d. Reason: %s', addr, port, reason);
 					parent.started = false
-					context._processActions()
-				},
-				'onOpen': function(user) {
+				}),
+				'onOpen': context.wrapNativeCallback(function(user) {
 					log('A user connected:', user);
 					parent._user = user
-					context._processActions()
-				},
-				'onMessage' : function(conn, msg) {
+				}),
+				'onMessage' : context.wrapNativeCallback(function(conn, msg) {
 					log(conn, msg);
-				},
-				'onClose' : function(conn, code, reason, wasClean) {
+				}),
+				'onClose' : context.wrapNativeCallback(function(conn, code, reason, wasClean) {
 					log('A user disconnected from %s', conn.remoteAddr);
-				}
-			}, function onStart(addr, port) {
+				})
+			}, context.wrapNativeCallback(function onStart(addr, port) {
 				log('Listening on address', addr, "port", port);
 				parent.started = true
-				context._processActions()
-			}, function onDidNotStart(reason) {
+			}), context.wrapNativeCallback(function onDidNotStart(reason) {
 				log('Did not start. Reason: %s', reason);
 				parent.started = false
-			});
+			}));
 			parent._wsserver = wsserver
 		}
 	}
