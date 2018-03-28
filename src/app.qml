@@ -71,6 +71,7 @@ Item {
 		id: accelCheckbox;
 		y: 560;
 		anchors.horizontalCenter: parent.horizontalCenter;
+		touchEnabled: server.started;
 	}
 
 	Text {
