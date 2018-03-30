@@ -1,4 +1,5 @@
 GridView {
+	id: digitGridProto;
 	signal sendKey;
 	width: (cellWidth + spacing) * 3;
 	height: (cellHeight + spacing) * 4;
@@ -13,7 +14,7 @@ GridView {
 		height: parent.cellHeight;
 		key: model.key;
 
-		onClicked: { parent.sendKey(model.key) }
+		onClicked: { digitGridProto.sendKey(model.key) }
 	}
 
 	onCompleted: {
