@@ -24,7 +24,13 @@ Item {
 		height: 100%;
 		currentIndex: context.system.landscape ? 1 : 0;
 
-		RemoteControlLayout { }
+		RemoteControlLayout {
+			serverIp: server.ip;
+			serverPort: server.port;
+			serverStarted: server.started;
+
+			onSend(data): { server.send(data) }
+		}
 
 		Item {
 		//TODO: imple landscape layout (gamepad mode)

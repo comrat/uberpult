@@ -1,4 +1,9 @@
 Item {
+	id: remoteControlLayoutProto;
+	signal send;
+	property bool serverStarted;
+	property string serverIp;
+	property string serverPort;
 	width: 100%;
 	height: 100%;
 
@@ -6,8 +11,8 @@ Item {
 		y: 10;
 		width: 100%;
 		horizontalAlignment: Text.AlignHCenter;
-		text: server.started ? "Server started" : "Server is not started";
-		color: server.started ? "#0f0" : "#f00";
+		text: parent.serverStarted ? "Server started" : "Server is not started";
+		color: parent.serverStarted ? "#0f0" : "#f00";
 		font.pixelSize: 24;
 	}
 
@@ -15,7 +20,7 @@ Item {
 		y: 50;
 		width: 100%;
 		horizontalAlignment: Text.AlignHCenter;
-		text: server.ip ? server.ip : "0.0.0.0";
+		text: parent.serverIp ? parent.serverIp : "0.0.0.0";
 		color: "#000";
 		font.pixelSize: 24;
 	}
@@ -24,7 +29,7 @@ Item {
 		y: 90;
 		width: 100%;
 		horizontalAlignment: Text.AlignHCenter;
-		text: server.port;
+		text: parent.serverPort;
 		color: "#000";
 		font.pixelSize: 24;
 	}
@@ -35,7 +40,7 @@ Item {
 
 		onSendKey(key): {
 			log("Digit key pressed", key)
-			server.send('{ event: "keyPressed", keyCode: "' + key + '" }')
+			remoteControlLayoutProto.send('{ event: "keyPressed", keyCode: "' + key + '" }')
 		}
 	}
 
@@ -46,7 +51,7 @@ Item {
 
 		onSendKey(key): {
 			log("dpad key pressed", key)
-			server.send('{ event: "keyPressed", keyCode: "' + key + '" }')
+			remoteControlLayoutProto.send('{ event: "keyPressed", keyCode: "' + key + '" }')
 		}
 	}
 
@@ -54,7 +59,7 @@ Item {
 		id: accelCheckbox;
 		y: 560;
 		anchors.horizontalCenter: parent.horizontalCenter;
-		touchEnabled: server.started;
+		touchEnabled: parent.serverStarted;
 	}
 
 	Text {
