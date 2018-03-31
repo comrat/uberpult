@@ -1,4 +1,5 @@
 ControlLayout {
+	id: gamepadLayoutProto;
 
 	Item {
 		id: navigationKeys;
@@ -14,7 +15,7 @@ ControlLayout {
 			icon: "res/up.png";
 			key: "Up";
 
-			onClicked: { this.parent.sendKey(this.key) }
+			onClicked: { gamepadLayoutProto.sendKey(this.key) }
 		}
 
 		KeyButton {
@@ -22,7 +23,7 @@ ControlLayout {
 			icon: "res/left.png";
 			key: "Left";
 
-			onClicked: { this.parent.sendKey(this.key) }
+			onClicked: { gamepadLayoutProto.sendKey(this.key) }
 		}
 
 		KeyButton {
@@ -31,7 +32,7 @@ ControlLayout {
 			icon: "res/right.png";
 			key: "Right";
 
-			onClicked: { this.parent.sendKey(this.key) }
+			onClicked: { gamepadLayoutProto.sendKey(this.key) }
 		}
 
 		KeyButton {
@@ -40,7 +41,7 @@ ControlLayout {
 			icon: "res/down.png";
 			key: "Down";
 
-			onClicked: { this.parent.sendKey(this.key) }
+			onClicked: { gamepadLayoutProto.sendKey(this.key) }
 		}
 	}
 
@@ -59,7 +60,7 @@ ControlLayout {
 			icon: "res/triangle.png";
 			key: "Triangle";
 
-			onClicked: { this.parent.sendKey(this.key) }
+			onClicked: { gamepadLayoutProto.sendKey(this.key) }
 		}
 
 		KeyButton {
@@ -67,7 +68,7 @@ ControlLayout {
 			icon: "res/square.png";
 			key: "Square";
 
-			onClicked: { this.parent.sendKey(this.key) }
+			onClicked: { gamepadLayoutProto.sendKey(this.key) }
 		}
 
 		KeyButton {
@@ -76,7 +77,7 @@ ControlLayout {
 			icon: "res/circle.png";
 			key: "Circle";
 
-			onClicked: { this.parent.sendKey(this.key) }
+			onClicked: { gamepadLayoutProto.sendKey(this.key) }
 		}
 
 		KeyButton {
@@ -85,7 +86,7 @@ ControlLayout {
 			icon: "res/cross.png";
 			key: "Cross";
 
-			onClicked: { this.parent.sendKey(this.key) }
+			onClicked: { gamepadLayoutProto.sendKey(this.key) }
 		}
 	}
 
@@ -98,4 +99,6 @@ ControlLayout {
 		anchors.top: actionKeys.bottom;
 		anchors.right: actionKeys.left;
 	}
+
+	sendKey(key): { this.send('{ event: "keyPressed", keyCode: "' + key + '" }') }
 }
