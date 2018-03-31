@@ -32,8 +32,11 @@ Item {
 			onSend(data): { server.send(data) }
 		}
 
-		Item {
-		//TODO: imple landscape layout (gamepad mode)
+		GamepadLayout {
+			serverIp: server.ip;
+			serverPort: server.port;
+
+			onSend(data): { server.send(data) }
 		}
 	}
 }

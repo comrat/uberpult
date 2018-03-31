@@ -3,6 +3,7 @@ Item {
 	property int size: 50;
 	property int spacing: 5;
 	width: size * 3 + spacing * 2;
+	height: width;
 
 	KeyButton {
 		anchors.horizontalCenter: parent.horizontalCenter;
