@@ -1,10 +1,11 @@
 ControlLayout {
 
 	Item {
+		id: navigationKeys;
 		property int size: 50;
 		property int spacing: 5;
-		x: 50;
-		y: 50;
+		x: 30;
+		y: 30;
 		width: size * 3 + spacing * 2;
 		height: width;
 
@@ -44,13 +45,14 @@ ControlLayout {
 	}
 
 	Item {
+		id: actionKeys;
 		property int size: 50;
 		property int spacing: 5;
-		y: 50;
+		y: 30;
 		width: size * 3 + spacing * 2;
 		height: width;
 		anchors.right: parent.right;
-		anchors.rightMargin: 50;
+		anchors.rightMargin: 30;
 
 		KeyButton {
 			anchors.horizontalCenter: parent.horizontalCenter;
@@ -85,5 +87,15 @@ ControlLayout {
 
 			onClicked: { this.parent.sendKey(this.key) }
 		}
+	}
+
+	JoyStick {
+		anchors.top: navigationKeys.bottom;
+		anchors.left: navigationKeys.right;
+	}
+
+	JoyStick {
+		anchors.top: actionKeys.bottom;
+		anchors.right: actionKeys.left;
 	}
 }
