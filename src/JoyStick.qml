@@ -1,6 +1,7 @@
 Rectangle {
 	id: joyStickProto;
-	property bool moveToInitialState;
+	signal moved;
+	property bool moveToInitialState: true;
 	width: 120;
 	height: 120;
 	radius: width / 2;
@@ -38,6 +39,18 @@ Rectangle {
 				joyStickProto.moveToInitialState = true
 				this.parent.x = 10
 				this.parent.y = 10
+			}
+		}
+
+		Timer {
+			interval: 50;
+			running: !joyStickProto.moveToInitialState;
+			repeat: running;
+
+			onTriggered: {
+				var x = (this.parent.x - 10) / 20
+				var y = -(this.parent.y - 10) / 20
+				joyStickProto.moved(x, y)
 			}
 		}
 	}

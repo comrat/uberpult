@@ -93,11 +93,15 @@ ControlLayout {
 	JoyStick {
 		anchors.top: navigationKeys.bottom;
 		anchors.left: navigationKeys.right;
+
+		onMoved(x, y): { gamepadLayoutProto.send('{ event: "leftJoystick", axes: { x: ' + x + ', y: ' + y + ' }') }
 	}
 
 	JoyStick {
 		anchors.top: actionKeys.bottom;
 		anchors.right: actionKeys.left;
+
+		onMoved(x, y): { gamepadLayoutProto.send('{ event: "rightJoystick", axes: { x: ' + x + ', y: ' + y + ' }') }
 	}
 
 	sendKey(key): { this.send('{ event: "keyPressed", keyCode: "' + key + '" }') }
