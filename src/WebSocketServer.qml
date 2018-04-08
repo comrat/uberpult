@@ -12,12 +12,6 @@ Object {
 			var context = this._context
 			var parent = this.parent
 
-			if (window.networkinterface)
-				window.networkinterface.getIPAddress(context.wrapNativeCallback(function (ip) {
-					log("Got IP", ip);
-					parent.ip = ip
-				}));
-
 			if (!window.cordova || !window.cordova.plugins) {
 				log("WSS Plugin wasn't initialized")
 				return
@@ -26,7 +20,7 @@ Object {
 			var wsserver = window.cordova.plugins.wsserver;
 			var port = parent.port
 			wsserver.start(port, {
-				'onFailure' : context.wrapNativeCallback(function(addr, port, reason) {
+				'onFailure': context.wrapNativeCallback(function(addr, port, reason) {
 					log('Stopped listening on %s:%d. Reason: %s', addr, port, reason);
 					parent.started = false
 				}),
@@ -34,10 +28,10 @@ Object {
 					log('A user connected:', user);
 					parent._user = user
 				}),
-				'onMessage' : context.wrapNativeCallback(function(conn, msg) {
+				'onMessage': context.wrapNativeCallback(function(conn, msg) {
 					log(conn, msg);
 				}),
-				'onClose' : context.wrapNativeCallback(function(conn, code, reason, wasClean) {
+				'onClose': context.wrapNativeCallback(function(conn, code, reason, wasClean) {
 					log('A user disconnected from %s', conn.remoteAddr);
 				})
 			}, context.wrapNativeCallback(function onStart(addr, port) {
@@ -47,6 +41,16 @@ Object {
 				log('Did not start. Reason: %s', reason);
 				parent.started = false
 			}));
+
+			wsserver.getInterfaces(context.wrapNativeCallback(function(interfaces) {
+				log("got interfaces", getInterfaces)
+				for (var i in interfaces) {
+					var iface = interfaces[i]
+					if (iface && iface.ipv4Addresses && iface.ipv4Addresses.length)
+						parent.ip = iface.ipv4Addresses[0]
+				}
+			}))
+
 			parent._wsserver = wsserver
 		}
 	}
