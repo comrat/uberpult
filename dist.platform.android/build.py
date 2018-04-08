@@ -16,7 +16,6 @@ def build(app, title):
     os.chdir(app)
     os.system('cordova platform add android')
     os.system('cordova plugin add cordova-plugin-device')
-    os.system('cordova plugin add cordova-plugin-networkinterface')
     os.system('cordova plugin add cordova-plugin-websocket-server')
     os.system('cordova build android')
     os.chdir('..')

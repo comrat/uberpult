@@ -43,7 +43,7 @@ Object {
 			}));
 
 			wsserver.getInterfaces(context.wrapNativeCallback(function(interfaces) {
-				log("got interfaces", getInterfaces)
+				log("Got interfaces", interfaces)
 				for (var i in interfaces) {
 					var iface = interfaces[i]
 					if (iface && iface.ipv4Addresses && iface.ipv4Addresses.length)
