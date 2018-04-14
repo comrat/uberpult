@@ -104,5 +104,5 @@ ControlLayout {
 		onMoved(x, y): { gamepadLayoutProto.send('{ "event": "rightJoystick", "axes": { "x": ' + x + ', "y": ' + y + ' } }') }
 	}
 
-	sendKey(key): { this.send('{ "event": "keyPressed", "keyCode": "' + key + '" }') }
+	sendKey(key): { this.send('{ "event": "keyPressed", "key": "' + key + '" }') }
 }

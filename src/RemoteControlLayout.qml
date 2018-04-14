@@ -34,7 +34,7 @@ ControlLayout {
 
 		onSendKey(key): {
 			log("Digit key pressed", key)
-			remoteControlLayoutProto.send('{ "event": "keyPressed", "keyCode": "' + key + '" }')
+			remoteControlLayoutProto.send('{ "event": "keyPressed", "key": "' + key + '" }')
 		}
 	}
 
@@ -45,7 +45,7 @@ ControlLayout {
 
 		onSendKey(key): {
 			log("dpad key pressed", key)
-			remoteControlLayoutProto.send('{ "event": "keyPressed", "keyCode": "' + key + '" }')
+			remoteControlLayoutProto.send('{ "event": "keyPressed", "key": "' + key + '" }')
 		}
 	}
 
