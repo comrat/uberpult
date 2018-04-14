@@ -58,7 +58,7 @@ ControlLayout {
 		KeyButton {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			icon: "res/triangle.png";
-			key: "Triangle";
+			key: "Green";
 
 			onClicked: { gamepadLayoutProto.sendKey(this.key) }
 		}
@@ -66,7 +66,7 @@ ControlLayout {
 		KeyButton {
 			y: parent.size + parent.spacing;
 			icon: "res/square.png";
-			key: "Square";
+			key: "Yellow";
 
 			onClicked: { gamepadLayoutProto.sendKey(this.key) }
 		}
@@ -75,7 +75,7 @@ ControlLayout {
 			x: (parent.size + parent.spacing) * 2;
 			y: height + parent.spacing;
 			icon: "res/circle.png";
-			key: "Circle";
+			key: "Red";
 
 			onClicked: { gamepadLayoutProto.sendKey(this.key) }
 		}
@@ -84,7 +84,7 @@ ControlLayout {
 			y: (parent.size + parent.spacing) * 2;
 			anchors.horizontalCenter: parent.horizontalCenter;
 			icon: "res/cross.png";
-			key: "Cross";
+			key: "Blue";
 
 			onClicked: { gamepadLayoutProto.sendKey(this.key) }
 		}
