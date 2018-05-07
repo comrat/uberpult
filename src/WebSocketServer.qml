@@ -1,5 +1,6 @@
 Object {
 	id: serverProto;
+	signal message;
 	signal userConnected;
 	signal userDisconnected;
 	property bool started;
@@ -12,6 +13,16 @@ Object {
 		interval: 2000;
 
 		onTriggered: { this.parent.start() }
+	}
+
+	sendMessage(msg, name): {
+		log("send:", this.started, "user", this._users)
+		if (!this.started)
+			return
+
+		var users = this._users
+		for (var i in users)
+			this._wsserver.send(users[i], { "message": msg, "user": { "name": name } })
 	}
 
 	start: {
@@ -38,6 +49,7 @@ Object {
 				self.userConnected(user)
 			}),
 			'onMessage': context.wrapNativeCallback(function(user, msg) {
+				self.message(msg, user)
 			}),
 			'onClose': context.wrapNativeCallback(function(user, code, reason, wasClean) {
 				log('A user disconnected from %s', user.remoteAddr);
