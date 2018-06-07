@@ -1,6 +1,15 @@
 ControlLayout {
 	id: gamepadLayoutProto;
 
+	Text {
+		y: 30;
+		width: 100%;
+		horizontalAlignment: Text.AlignHCenter;
+		text: parent.serverIp ? parent.serverIp : "0.0.0.0";
+		color: "#000";
+		font.pixelSize: 24;
+	}
+
 	Item {
 		id: navigationKeys;
 		property int size: 50;
