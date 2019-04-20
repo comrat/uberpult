@@ -4,6 +4,7 @@ Item {
 
 	WebSocketServer {
 		id: server;
+		autostart: true;
 		port: 42451;
 	}
 

@@ -8,6 +8,7 @@ Object {
 	property string ip;
 	property string port;
 
+	// TODO: use device ready event instead of timer
 	Timer {
 		id: startDelayTimer;
 		interval: 2000;
@@ -64,11 +65,13 @@ Object {
 		}));
 
 		wsserver.getInterfaces(context.wrapNativeCallback(function(interfaces) {
-			log("Got interfaces", interfaces)
 			for (var i in interfaces) {
+				log("Got interfaces", interfaces)
 				var iface = interfaces[i]
-				if (iface && iface.ipv4Addresses && iface.ipv4Addresses.length)
-					parent.ip = iface.ipv4Addresses[0]
+				if (iface && iface.ipv4Addresses && iface.ipv4Addresses.length) {
+					serverProto.ip = iface.ipv4Addresses[0]
+					break
+				}
 			}
 		}))
 
