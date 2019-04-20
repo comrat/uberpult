@@ -40,4 +40,15 @@ Item {
 			onSend(data): { server.send(data) }
 		}
 	}
+
+	Timer {
+		interval: 10000;
+		repeat: parent.visible;
+		running: parent.visible;
+
+		onTriggered: {
+			if (window.plugins && window.plugins.insomnia)
+				window.plugins.insomnia.keepAwake()
+		}
+	}
 }
