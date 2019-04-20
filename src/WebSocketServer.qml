@@ -80,10 +80,12 @@ Object {
 	}
 
 	send(msg): {
-		log("Send", msg, "strted", this.started, "server", this._wsserver, "user", this._user)
-		if (!this.started || !this._wsserver || !this._user)
+		if (!this.started || !this._wsserver || !this._users)
 			return
-		this._wsserver.send({'uuid': this._user.uuid}, msg)
+		for (var i in this._users) {
+			var user = this._users[i]
+			this._wsserver.send({'uuid': user.uuid}, msg)
+		}
 	}
 
 	onCompleted: { if (this.autostart) startDelayTimer.restart() }
