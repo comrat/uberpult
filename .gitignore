@@ -2,3 +2,8 @@
 build.*
 *.swn
 *.swp
+.gradle
+gradle
+gradlew*
+gradlew.bat
+settings.gradle
