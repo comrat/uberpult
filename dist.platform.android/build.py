@@ -16,7 +16,7 @@ def build(app, title):
     os.chdir(app)
     os.system('cordova platform add android')
     os.system('cordova plugin add cordova-plugin-device')
-    os.system('cordova plugin add cordova-plugin-websocket-server')
+    os.system('cordova plugin add https://github.com/comrat/cordova-plugin-websocket-server.git')
     os.system('cordova plugin add https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git')
     os.system('cordova build android')
     os.chdir('..')
